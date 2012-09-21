@@ -7,10 +7,12 @@
       "npm":  "1.1.x"
   }
   , "dependencies": {
-      "express": "2.5.x"
+      "express": "2.x"
     , "jade": ">= 0.0.x"
-    , "canvas": "0.13.x"
-    , "mocha": ">=1.0.3"
+    , "canvas": "0.12.x"
+  }
+  , "devDependencies": {
+      "mocha": ">=1.0.3"
     , "should": ">=0.6.x"
     , "sinon": ">=1.3.x"
   }
