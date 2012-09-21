@@ -48,33 +48,21 @@ module.exports = function(req, res) {
 
   if (req.params.format == 'png') {
     if (req.route.method == "get") {
-      res.writeHead(200, {'Content-Type': 'image/png'});
-      var stream = canvas.createPNGStream();
-      stream.on('data', function(chunk){
-        res.write(chunk);
-      });
-      stream.on('end', function() {
-        res.end();
-      });
-      stream.on('close', function() {
-        console.log("Rendered PNG");
+      canvas.toBuffer(function(err, buf){
+        res.writeHead(200, {'Content-Type': 'image/png'});
+        res.end(buf);
       });
     }
     else if (req.route.method == "post") {
-      var output = canvas.toBuffer();
-      res.end(output.toString('base64'));
+      // convert it to a base64 string to be rehydrated in the browser
+      canvas.toBuffer(function(err, buf){
+        res.end(buf.toString('base64'));
+      });
     }
   }
   else if(req.params.format == 'pdf') {
     res.writeHead(200, {'Content-Type': 'application/pdf'});
-    var output = canvas.toBuffer(); 
-    res.end(output);
-    // canvas.toBuffer(function(err, buffer){
-    //   console.log(err);
-    //   console.log("ben");
-    //   console.log(buffer.toString);
-
-    // });
+    res.end(canvas.toBuffer());
   }
 };
 
